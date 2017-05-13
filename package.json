@@ -10,6 +10,7 @@
     "lodash": "^4.17.4",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
+    "react-native-fetch-blob": "^0.10.5",
     "react-native-image-picker": "^0.26.3"
   },
   "devDependencies": {
