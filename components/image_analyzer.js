@@ -107,6 +107,25 @@ export default class ImageAnalyzer extends Component {
 		});
 	}
 	
+	renderImage() {
+		if (this.state.hasPhoto) {
+			return (
+				<Image
+					style={this.state.photo_style}
+					source={this.state.photo}
+				></Image>				
+			);
+		}
+		else {
+			return (
+				<Image
+					style={styles.image}
+					source={require('../assets/facebook-anonymous-app.jpg')}
+				></Image>					
+			);
+		}
+	}
+
 	render() {
 		const leftButtonConfig = {
 			title: 'Back',
@@ -115,10 +134,7 @@ export default class ImageAnalyzer extends Component {
 		return (
 			<View style={styles.container}>
 				<NavigationBar title={{ title: 'myStories', }} leftButton={leftButtonConfig} />
-				<Image
-					style={this.state.photo_style}
-					source={this.state.photo}
-				></Image>
+				{this.renderImage()}
 				<Button
 					text="Select photo from Camera Roll"
 					onPress={this.selectImage.bind(this)}
@@ -148,6 +164,11 @@ const styles = StyleSheet.create({
 	text: {
 		color: '#fff',
 		fontSize: 18
+	},
+	image: {
+		width: 360,
+		height: 360,
+		alignSelf: 'center'
 	}
 });
 

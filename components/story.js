@@ -7,30 +7,37 @@ import {
 	Image
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class Story extends Component {
 	constructor(props) {
 		super(props);
 		console.log(this.props);
+		this.state = {location: null};
+	}
+
+	componentDidMount() {
+		RNFetchBlob.fetch('GET', 'https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&sensor=true', {
+		'Accept': 'application/json',
+		'Content-Type': 'application/octet-stream'
+		})
+		.then(res => {
+			return res.json();
+		})
+		.then(json => {
+			if (json.length) {
+				this.setState({
+					location: json.results[0].formatted_address
+				});
+			}
+			return json;
+		});
 	}
 
 	render() {
 		const leftButtonConfig = {
 			title: 'Back',
 			handler: () => this.props.navigator.pop(),
-		};
-
-		const renderDetails = () => {
-			let people = [];
-			for (let i = 0; i < this.props.route.faceData.length; i++) {
-				people.push(
-					<View key={i} >
-						<Text>
-							Hello
-						</Text>
-					</View>
-				);
-			}
 		};
 
 		return (
@@ -45,7 +52,8 @@ export default class Story extends Component {
 					return (
 						<Text style={styles.detailText} key={person.faceId}>
 							Person {idx+1}: {person.faceAttributes.gender === 'male' ? 'He ' : 'She '} 
-							appears to be {Math.floor(person.faceAttributes.age)} years old.
+							appears to be {Math.floor(person.faceAttributes.age)} years old. 
+							{this.state.location}
 						</Text>
 					);
 				})}
