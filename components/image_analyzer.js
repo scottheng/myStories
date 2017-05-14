@@ -38,33 +38,53 @@ export default class ImageAnalyzer extends Component {
 				this.setState({
 					photo_style: {
 						position: 'relative',
-						width: response.width,
-						height: response.height
+						width: 480,
+						height: 480
 					},
 					hasPhoto: true,
-					photo: response.uri,
+					photo: {uri: response.uri},
 					faceData: response.data
 				});
 			}
 		});
 	}
+
+	renderImage() {
+
+	}
 	render() {
 		return (
-			<Button
-				text="Select photo from Camera Roll"
-				onPress={this.selectImage.bind(this)}
-				buttonStyles={styles.button}
-
-			/>
+			<View style={styles.container}>
+				<Image
+					style={this.state.photo_style}
+					source={this.state.photo}
+				>{this.renderImage.call(this)}</Image>
+				<Button
+					text="Select photo from Camera Roll"
+					onPress={this.selectImage.bind(this)}
+					buttonStyles={styles.button}
+					buttonTextStyles={styles.text}
+				/>
+			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: 'center',
+		alignSelf: 'center',
+		backgroundColor: '#d6c5ad'
+	},
 	button: {
-		margin: 10,
+		margin: 40,
 		padding: 15,
-		backgroundColor: '#fff'
+		backgroundColor: '#6bd3e0',
+	},
+	text: {
+		color: '#fff',
+		fontSize: 18
 	}
 });
 

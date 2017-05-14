@@ -26,13 +26,22 @@ export default class myStories extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container} >
         <ImageAnalyzer imagePickerOptions={imagePickerOptions} />
       </View>
     );
   }
   
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#d6c5ad',
+  }
+});
 
 
 AppRegistry.registerComponent('myStories', () => myStories);
