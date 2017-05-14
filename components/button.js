@@ -13,7 +13,7 @@ export default class Button extends Component {
 			<View>
 				<TouchableHighlight onPress={this.props.onPress} style={this.props.buttonStyles}>
 					<View>
-						<Text style={this.props.buttonTextStyles}>Select Photo From Camera Roll</Text>
+						<Text style={this.props.buttonTextStyles}>{this.props.text}</Text>
 					</View>
 				</TouchableHighlight>
 			</View>

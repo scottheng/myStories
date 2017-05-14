@@ -8,10 +8,12 @@ import {
 	Image
 } from 'react-native';
 
+import RNFetchBlob from 'react-native-fetch-blob';
 import Button from './button';
 import lodash from 'lodash';
 
 var ImagePicker = require('react-native-image-picker');
+
 
 export default class ImageAnalyzer extends Component {
 	constructor(props) {
@@ -43,7 +45,7 @@ export default class ImageAnalyzer extends Component {
 					},
 					hasPhoto: true,
 					photo: {uri: response.uri},
-					faceData: response.data
+					photoData: response.data
 				});
 			}
 		});
@@ -52,19 +54,58 @@ export default class ImageAnalyzer extends Component {
 	renderImage() {
 
 	}
+
+	renderCreateStoryButton() {
+		if (this.state.hasPhoto) {
+			return (
+				<Button
+					text="Create Story"
+					onPress={this.fetchFaceData.bind(this)}
+					buttonStyles={styles.button}
+					buttonTextStyles={styles.text}
+				/>
+			);
+		}
+	}
+
+	fetchFaceData() {
+		RNFetchBlob.fetch('POST', 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceAttributes=age,gender,emotion', {
+		'Accept': 'application/json',
+  	 	'Content-Type': 'application/octet-stream',
+		'Ocp-Apim-Subscription-Key': this.props.apiKey
+		}, this.state.photoData)
+		.then(res => {
+			return res.json();
+		})
+		.then(json => {
+			if (json.length) {
+				this.setState({faceData: json});
+				console.log(json);
+			}
+			else {
+				alert("There are no faces in this picture");
+			}
+			return json;
+		})
+		.catch( function(error) {
+			alert('Sorry, the request failed. Please try again.' + JSON.stringify(error));
+		});
+	}
+	
 	render() {
 		return (
 			<View style={styles.container}>
 				<Image
 					style={this.state.photo_style}
 					source={this.state.photo}
-				>{this.renderImage.call(this)}</Image>
+				></Image>
 				<Button
 					text="Select photo from Camera Roll"
 					onPress={this.selectImage.bind(this)}
 					buttonStyles={styles.button}
 					buttonTextStyles={styles.text}
 				/>
+				{this.renderCreateStoryButton.call(this)}
 			</View>
 		);
 	}
@@ -78,7 +119,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#d6c5ad'
 	},
 	button: {
-		margin: 40,
+		margin: 20,
 		padding: 15,
 		backgroundColor: '#6bd3e0',
 	},

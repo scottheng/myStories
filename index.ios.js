@@ -27,7 +27,7 @@ export default class myStories extends Component {
   render() {
     return (
       <View style={styles.container} >
-        <ImageAnalyzer imagePickerOptions={imagePickerOptions} />
+        <ImageAnalyzer imagePickerOptions={imagePickerOptions} apiKey={apiKey}/>
       </View>
     );
   }
