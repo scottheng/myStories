@@ -9,8 +9,11 @@ import {
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import RNFetchBlob from 'react-native-fetch-blob';
-import Button from './button';
 import lodash from 'lodash';
+
+import Button from './button';
+import Story from './story';
+
 
 var ImagePicker = require('react-native-image-picker');
 
@@ -59,6 +62,7 @@ export default class ImageAnalyzer extends Component {
 					photo: {uri: response.uri},
 					photoData: response.data
 				});
+				console.log(response);
 			}
 		});
 	}
@@ -87,12 +91,15 @@ export default class ImageAnalyzer extends Component {
 		})
 		.then(json => {
 			if (json.length) {
-				this.setState({faceData: json});
-				console.log(json);
+				this.props.navigator.push({
+					component: Story,
+					faceData: json
+				});
 			}
 			else {
 				alert("There are no faces in this picture");
 			}
+
 			return json;
 		})
 		.catch( function(error) {
@@ -136,6 +143,7 @@ const styles = StyleSheet.create({
 		margin: 20,
 		padding: 15,
 		backgroundColor: '#6bd3e0',
+		borderRadius: 20
 	},
 	text: {
 		color: '#fff',

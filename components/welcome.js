@@ -9,7 +9,7 @@ import ImageAnalyzer from './image_analyzer';
 export default class Welcome extends Component {
 	render() {
 		const rightButtonConfig = {
-			title: 'Forward',
+			title: 'Next',
 			handler: () => this.props.navigator.push({
 				component: ImageAnalyzer
 			})
