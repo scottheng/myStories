@@ -117,7 +117,7 @@ export default class ImageAnalyzer extends Component {
 				});
 			}
 			else {
-				alert("There are no faces in this picture");
+				alert("There are no faces in this picture. Please select another photo.");
 			}
 
 			return json;
@@ -173,18 +173,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 		// alignItems: 'center',
 		// alignSelf: 'center',
-		backgroundColor: '#d6c5ad'
+		backgroundColor: '#f5f8ff'
 	},
 	button: {
 		alignSelf: 'center',
 		margin: 20,
 		padding: 15,
-		backgroundColor: '#6bd3e0',
+		backgroundColor: '#7fabeb',
 		borderRadius: 20
 	},
 	text: {
 		color: '#fff',
-		fontSize: 18
+		fontSize: 18,
+		fontFamily: 'Gill Sans'
 	},
 	image: {
 		width: 360,

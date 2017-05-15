@@ -60,15 +60,19 @@ export default class Story extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#d6c5ad'
+		backgroundColor: '#f5f8ff'
 	},
 	text: {
 		fontSize: 18,
-		marginTop: 20,
-		alignSelf: 'center'
+		margin: 20,
+		alignSelf: 'center',
+		color: '#f6c1d7',
+		fontFamily: 'Gill Sans'
 	},
 	detailText: {
 		fontSize: 18,
-		alignSelf: 'center'
+		alignSelf: 'center',
+		color: '#7fabeb',
+		fontFamily: 'Gill Sans'
 	}
 });
