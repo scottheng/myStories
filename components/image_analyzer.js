@@ -14,7 +14,7 @@ import lodash from 'lodash';
 import Button from './button';
 import Story from './story';
 
-var ImagePicker = require('react-native-image-picker');
+import ImagePicker from 'react-native-image-picker';
 
 const imagePickerOptions = {
   title: 'Select Photo', 
@@ -120,7 +120,6 @@ export default class ImageAnalyzer extends Component {
 			else {
 				alert("There are no faces in this picture. Please select another photo.");
 			}
-
 			return json;
 		})
 		.catch( function(error) {
