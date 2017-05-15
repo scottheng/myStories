@@ -63,6 +63,6 @@ export const emotionEvaluator = (emotionScores) => {
 I used `react-native-maps` to render a map using the coordinates, if given, of the photo.
 
 ## Future Todos
-I wanted to use the geolocation and timestamp of the photo to query for weather information from a Weather API. I think this would be interesting detail to have in the Story. 
+I wanted to use the geolocation and timestamp of the photo to query for weather information from a Weather API. I think this would be an interesting detail to have in the Story. 
 
 It would also be nice to disable the `Create Story` button or generate a loading screen page after the button has been clicked.
