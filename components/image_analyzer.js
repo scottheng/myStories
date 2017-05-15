@@ -40,7 +40,8 @@ export default class ImageAnalyzer extends Component {
 			},
 			hasPhoto: false,
 			photo: null,
-			faceData: null
+			faceData: null,
+			location: null
 		};
 	}
 	
@@ -60,9 +61,23 @@ export default class ImageAnalyzer extends Component {
 					},
 					hasPhoto: true,
 					photo: {uri: response.uri},
-					photoData: response.data
+					photoData: response.data,
+					time: response.timestamp
 				});
-				console.log(response);
+				RNFetchBlob.fetch('GET', `https://maps.googleapis.com/maps/api/geocode/json?latlng=${response.latitude},${response.longitude}&sensor=true`, {
+				'Accept': 'application/json',
+				'Content-Type': 'application/octet-stream'
+				})
+				.then(res => {
+					return res.json();
+				})
+				.then(json => {
+					this.setState({
+						location: json.results[0].formatted_address
+					});
+					console.log(json.results[0].formatted_address);
+					return json;
+				});
 			}
 		});
 	}
@@ -91,9 +106,12 @@ export default class ImageAnalyzer extends Component {
 		})
 		.then(json => {
 			if (json.length) {
+				console.log(this.state.location);
 				this.props.navigator.push({
 					component: Story,
-					faceData: json
+					faceData: json,
+					location: this.state.location,
+					time: this.state.time
 				});
 			}
 			else {
@@ -109,6 +127,7 @@ export default class ImageAnalyzer extends Component {
 	
 	renderImage() {
 		if (this.state.hasPhoto) {
+			console.log(this.state);
 			return (
 				<Image
 					style={this.state.photo_style}
