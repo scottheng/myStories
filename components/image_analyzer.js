@@ -64,20 +64,22 @@ export default class ImageAnalyzer extends Component {
 					photoData: response.data,
 					time: response.timestamp
 				});
-				RNFetchBlob.fetch('GET', `https://maps.googleapis.com/maps/api/geocode/json?latlng=${response.latitude},${response.longitude}&sensor=true`, {
-				'Accept': 'application/json',
-				'Content-Type': 'application/octet-stream'
-				})
-				.then(res => {
-					return res.json();
-				})
-				.then(json => {
-					this.setState({
-						location: json.results[0].formatted_address
+				if (response.latitude) {
+					RNFetchBlob.fetch('GET', `https://maps.googleapis.com/maps/api/geocode/json?latlng=${response.latitude},${response.longitude}&sensor=true`, {
+					'Accept': 'application/json',
+					'Content-Type': 'application/octet-stream'
+					})
+					.then(res => {
+						return res.json();
+					})
+					.then(json => {
+						this.setState({
+							location: json.results[0].formatted_address
+						});
+						console.log(json.results[0].formatted_address);
+						return json;
 					});
-					console.log(json.results[0].formatted_address);
-					return json;
-				});
+				}
 			}
 		});
 	}
