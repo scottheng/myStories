@@ -62,7 +62,8 @@ export default class ImageAnalyzer extends Component {
 					hasPhoto: true,
 					photo: {uri: response.uri},
 					photoData: response.data,
-					time: response.timestamp
+					time: response.timestamp,
+					geolocation: [response.latitude, response.longitude]
 				});
 				if (response.latitude) {
 					RNFetchBlob.fetch('GET', `https://maps.googleapis.com/maps/api/geocode/json?latlng=${response.latitude},${response.longitude}&sensor=true`, {
@@ -113,7 +114,8 @@ export default class ImageAnalyzer extends Component {
 					component: Story,
 					faceData: json,
 					location: this.state.location,
-					time: this.state.time
+					time: this.state.time,
+					geolocation: this.state.geolocation
 				});
 			}
 			else {

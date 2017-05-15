@@ -13,6 +13,7 @@
     "react-native-deprecated-custom-components": "^0.1.0",
     "react-native-fetch-blob": "^0.10.5",
     "react-native-image-picker": "^0.26.3",
+    "react-native-maps": "^0.15.0",
     "react-native-navbar": "^1.7.1"
   },
   "devDependencies": {
@@ -25,6 +26,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["./assets/fonts"]
+    "assets": [
+      "./assets/fonts"
+    ]
   }
 }
