@@ -14,7 +14,6 @@ import lodash from 'lodash';
 import Button from './button';
 import Story from './story';
 
-
 var ImagePicker = require('react-native-image-picker');
 
 const imagePickerOptions = {

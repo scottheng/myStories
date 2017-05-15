@@ -20,11 +20,46 @@ export default class Story extends Component {
 		this.state = {location: null};
 	}
 
-	renderLocation() {
-		console.log(this.state);
-		if (this.state.location) {
+	renderDescription(datetime) {
+		if (this.props.route.geolocation[0]) {
 			return (
-				<Text style={styles.detailText}>{this.props.route.location}</Text>
+				<Text style={styles.text}>
+					There {this.props.route.faceData.length > 1 ? 'are ' : 'is '} 
+					{this.props.route.faceData.length} 
+					{this.props.route.faceData.length > 1 ? ' people' : ' person'} in this photo.
+					This was taken near {this.props.route.location} at {datetime[1]} on {datetime[0]}.
+				</Text>
+			);
+		}
+		else {
+			return (
+				<Text style={styles.text}>
+					There {this.props.route.faceData.length > 1 ? 'are ' : 'is '} 
+					{this.props.route.faceData.length} 
+					{this.props.route.faceData.length > 1 ? ' people' : ' person'} in this photo. This was taken at{datetime[1]} on {datetime[0]}.
+					 Unfortunately, the location is unknown. :(
+				</Text>			
+			);
+		}
+	}
+
+	renderMap() {
+		if (this.props.route.geolocation[0]) {
+			return (
+				<MapView
+					style={styles.map}
+					initialRegion={{
+					latitude: this.props.route.geolocation[0],
+					longitude: this.props.route.geolocation[1],
+					latitudeDelta: 0.0008,
+					longitudeDelta: 0.0008,
+					}}
+				>
+					<MapView.Marker 
+						coordinate={{latitude: this.props.route.geolocation[0],
+									longitude: this.props.route.geolocation[1]}}
+					/>
+				</MapView>
 			);
 		}
 	}
@@ -63,12 +98,7 @@ export default class Story extends Component {
 		return (
 			<View style={styles.container}>
 				<NavigationBar title={{ title: 'myStories' }} leftButton={leftButtonConfig} />
-				<Text style={styles.text}>
-					There {this.props.route.faceData.length > 1 ? 'are ' : 'is '} 
-					{this.props.route.faceData.length} 
-					{this.props.route.faceData.length > 1 ? ' people' : ' person'} in this photo.
-					This was taken near {this.props.route.location} at {datetime[1]} on {datetime[0]}.
-				</Text>
+				{this.renderDescription(datetime)}
 				{this.props.route.faceData.map( (person, idx) => {
 					return (
 						<Text style={styles.detailText} key={person.faceId}>
@@ -79,20 +109,7 @@ export default class Story extends Component {
 						</Text>
 					);
 				})}
-				<MapView
-					style={styles.map}
-					initialRegion={{
-					latitude: this.props.route.geolocation[0] ? this.props.route.geolocation[0] : 37.788545,
-					longitude: this.props.route.geolocation[1] ? this.props.route.geolocation[1] : -122.406809,
-					latitudeDelta: 0.0008,
-					longitudeDelta: 0.0008,
-					}}
-				>
-					<MapView.Marker 
-						coordinate={{latitude: this.props.route.geolocation[0] ? this.props.route.geolocation[0] : 37.788545,
-									longitude: this.props.route.geolocation[1] ? this.props.route.geolocation[1] : -122.406809}}
-					/>
-				</MapView>
+				{this.renderMap()}
 			</View>
 		);
 	}
@@ -104,7 +121,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f5f8ff'
 	},
 	text: {
-		fontSize: 18,
+		fontSize: 24,
 		margin: 20,
 		alignSelf: 'center',
 		color: '#f6c1d7',
